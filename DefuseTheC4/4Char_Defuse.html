@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZappyFings</title>
+    <link rel="stylesheet" href="4Char_Defuse.css">
+</head>
+
+<body>
+    <header>
+        <a href="../index.html" class="logo">
+            <img src="../media/logo.png">
+        </a>
+        <a class="keys" href="../index.html">Home</a>
+        <a class="keys" href="../CPS Test/index.html">CPS Test</a>
+        <img src="../media/ham.png" id="ham" onclick="show_ham_menu()">
+        <ul id="ham_menu">
+            <li class="ham_menu_item"><a href="../index.html">Home</a></li>
+            <li class="ham_menu_item"><a href="../CPS Test/index.html">CPS Test</a></li>
+        </ul>
+    </header>
+    <div class="content">
+        <div class="text">Defuse the C4 before the timer runs out,rack up score</div>
+        <div class="game_box" id="game_box"><button id="start" onclick="show_score()">Click to Start</button>
+            <div class="score" id="score_box">Score:<span id="score">0</span></div>
+            <div class="clock" id="clock">
+                <div class="clock_marks"></div>
+                <div class="clock_marks"></div>
+                <div class="clock_hand">
+                    <div class="clock_hand_mark"></div>
+                </div>
+            </div>
+            <div id="show_image">
+                <img src="../media/c4.png" id="c4" />
+                <img src="../media/explosion.png" id="explosion" />
+                <img src="../media/greenTick.png" id="tick" />
+            </div>
+            <div class="next_or_restart">
+                <div id="next" id="next" onclick="nextRound()">Next</div>
+                <a href="4Char_Defuse.html" id="restart">Restart</a>
+            </div>
+            <div id="code"><span id="main_code">XXXX</span>
+            </div>
+            <div id="time_bar"></div>
+        </div>
+        <div id="char_grid_real">
+            <div class="char_grid">
+                <button class="char_button" id="char_A" onclick="codeWriter('A')">A</button>
+                <button class="char_button" id="char_B" onclick="codeWriter('B')">B</button>
+                <button class="char_button" id="char_C" onclick="codeWriter('C')">C</button>
+                <button class="char_button" id="char_D" onclick="codeWriter('D')">D</button>
+                <button class="char_button" id="char_E" onclick="codeWriter('E')">E</button>
+                <button class="char_button" id="char_F" onclick="codeWriter('F')">F</button>
+                <button class="char_button" id="char_1" onclick="codeWriter('1')">1</button>
+                <button class="char_button" id="char_2" onclick="codeWriter('2')">2</button>
+                <button class="char_button" id="char_3" onclick="codeWriter('3')">3</button>
+                <button class="char_button" id="char_4" onclick="codeWriter('4')">4</button>
+                <button class="char_button" id="char_5" onclick="codeWriter('5')">5</button>
+                <button class="char_button" id="char_6" onclick="codeWriter('6')">6</button>
+                <button class="char_button" id="char_7" onclick="codeWriter('7')">7</button>
+                <button class="char_button" id="char_8" onclick="codeWriter('8')">8</button>
+                <button class="char_button" id="char_9" onclick="codeWriter('9')">9</button>
+                <button class="char_button" id="char_0" onclick="codeWriter('0')">0</button>
+                <button class="char_button" id="char_clear" onclick="backspace()">Backspace</button>
+                <button class="char_button" id="char_enter" onclick="checkCode(hideStuff++)">Enter</button>
+            </div>
+        </div>
+        <div id="char_grid_clone">
+            <div class="char_grid_clone">
+                <button class="char_button" id="char_A_clone">A</button>
+                <button class="char_button" id="char_B_clone">B</button>
+                <button class="char_button" id="char_C_clone">C</button>
+                <button class="char_button" id="char_D_clone">D</button>
+                <button class="char_button" id="char_E_clone">E</button>
+                <button class="char_button" id="char_F_clone">F</button>
+                <button class="char_button" id="char_1_clone">1</button>
+                <button class="char_button" id="char_2_clone">2</button>
+                <button class="char_button" id="char_3_clone">3</button>
+                <button class="char_button" id="char_4_clone">4</button>
+                <button class="char_button" id="char_5_clone">5</button>
+                <button class="char_button" id="char_6_clone">6</button>
+                <button class="char_button" id="char_7_clone">7</button>
+                <button class="char_button" id="char_8_clone">8</button>
+                <button class="char_button" id="char_9_clone">9</button>
+                <button class="char_button" id="char_0_clone">0</button>
+                <button class="char_button" id="char_clear_clone">Backspace</button>
+                <button class="char_button" id="char_enter_clone">Enter</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    let show_ham_menu = () => {
+        if (ham_menu.style.display != "block") {
+            ham_menu.style.display = "block";
+        }
+        else {
+            ham_menu.style.display = "none";
+        }
+    }
+
+    let array = ['A', 'B', 'C', 'D', 'E', 'F', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
+    let correctCode;
+    let generateRandom = () => {
+        correctCode = `${array[Math.ceil(Math.random() * 14)]}${array[Math.ceil(Math.random() * 14)]}${array[Math.ceil(Math.random() * 14)]}${array[Math.ceil(Math.random() * 14)]}`
+    }
+    let main_code = document.getElementById("main_code");
+    generateRandom();
+    char_grid_real.style.display = "none";
+    char_grid_clone.style.display = "block";
+    let show_score = () => {
+        score_box.style.display = "block";
+        start.style.display = "none";
+        clock.style.display = "block"
+        code.style.display = "block";
+        main_code.innerHTML = correctCode;
+        showClockAndCode();
+    }
+    let showClockAndCode = () => {
+        let timeShow = 1;
+        setInterval(() => {
+            if (timeShow == 0) {
+                clock.style.display = "none";
+                main_code.style.display = "none";
+                showC4AndTimeBar();
+            }
+            timeShow--;
+        }, 1000);
+    }
+    let hideStuff = 0;
+    let timer = 6;
+    let showC4AndTimeBar = () => {
+        char_grid_real.style.display = "block";
+        char_grid_clone.style.display = "none";
+        c4.style.display = "block";
+        time_bar.style.display = "block";
+       let interval= setInterval(() => {
+            if (hideStuff != 0) {
+                timer=interval.timer;
+                return ;
+            }
+            else if (timer == 0) {
+                c4.style.display = "none";
+                time_bar.style.display = "none";
+                char_grid_real.style.display = "none";
+                char_grid_clone.style.display = "block";
+                showExplosion();
+                return;
+            }
+            timer--;
+        }, 1000);
+
+    }
+    let showExplosion = () => {
+        c4.style.display = "none";
+        explosion.style.display = "block";
+        restart.style.display = "block";
+    }
+    let inputCode = null;
+    let i = 4;
+    let input;
+    let codeWriter = (input) => {
+        inputCode = `${inputCode + input}`;
+        i++;
+        code.innerHTML = inputCode.substr(4, i);
+    }
+    let backspace = () => {
+        inputCode = inputCode.slice(0, inputCode.length - 1);
+        i--;
+        code.innerHTML = inputCode.substr(4, i);
+    }
+    let points=5,totalPoints=0;
+    let checkCode = () => {
+        console.log(timer);
+        c4.style.display = "none";
+        time_bar.style.display = "none";
+        explosion.style.display = "none";
+        if (inputCode == null) { youLose(); }
+        else if (inputCode.substr(4, i) == correctCode) {
+            youWin();
+            totalPoints=totalPoints+points;
+            score.innerHTML=totalPoints;
+            return 0;
+        }
+        else {
+            youLose()
+        }
+    }
+    let youWin = () => {
+        tick.style.display = "block";
+        next.style.display = "block";
+        code.style.color = "rgb(9, 190, 9)";
+        char_grid_real.style.display = "none";
+        char_grid_clone.style.display = "block";
+    }
+    let youLose = () => {
+        restart.style.display = "block";
+        explosion.style.display = "block";
+        code.style.color = "red";
+        char_grid_real.style.display = "none";
+        char_grid_clone.style.display = "block";
+    }
+    let index = 2;
+    let nextRound = () => {
+        code.style.color = "rgb(241, 206, 2)"
+        tick.style.display = "none";
+        next.style.display = "none";
+        generateRandom();
+        code.innerHTML = correctCode;
+        show_score();
+        setTimeout(() => {
+            inputCode = inputCode.slice(0, inputCode.length - 4);
+            code.innerHTML = inputCode.substr(4, 0);
+        }, 2000);
+        let timer = 8;
+        let explosionInterval = setInterval(() => {
+            if (hideStuff == index) {
+                index++;
+            
+                clearInterval(explosionInterval);
+                return ;
+            }
+            else if (timer == 0) {
+                showExplosion();
+                char_grid_real.style.display = "none";
+        char_grid_clone.style.display = "block";
+                return 0;
+            }
+            timer--;
+        }, 1000)
+    }
+</script>
+
+</html>

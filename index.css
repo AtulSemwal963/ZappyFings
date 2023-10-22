@@ -1,0 +1,214 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow&display=swap');
+
+/* font-family: 'Barlow', sans-serif; */
+:root {
+    --imp_text: 'Barlow', sans-serif;
+    --grey: rgb(48, 45, 45);
+    --yellow: rgb(241, 206, 2);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-flow: column wrap;
+    background-color: rgb(56, 53, 53);
+}
+
+header {
+    background-color: var(--grey);
+    height: 6em;
+    width: 100%;
+    box-shadow: 0px 5px 2px rgba(0, 0, 0, 0.692);
+    display: grid;
+    grid-template-columns: 10em repeat(4, 1fr);
+    border-bottom: 0.1px solid var(--yellow);
+    border-top: 0.1px solid var(--yellow);
+    width: 100%;
+}
+
+header .logo img {
+    height: 6em;
+    width: 10em;
+    position: relative;
+    top: -7%;
+    left: 5%;
+    float: left;
+    margin: 0.1em;
+}
+
+header .keys {
+    clear: left;
+    font-family: var(--imp_text);
+    font-weight: bold;
+    font-size: larger;
+    color: var(--yellow);
+    text-shadow: 2px 2px black;
+    text-decoration: none;
+    text-align: center;
+    width: 90%;
+    height: max-content;
+    align-self: center;
+}
+
+header .keys:hover {
+    transition-duration: 0.2s;
+    opacity: 1;
+    background-color: var(--yellow);
+    color: black;
+    text-shadow: none;
+    padding: 3%;
+    border-radius: 20px;
+    box-shadow: 0px 4px 10px var(--yellow), 0px -4px 10px var(--yellow);
+}
+
+header .keys:active {
+    box-shadow: 3px 3px 2px black inset;
+}
+
+.contentGrid{
+    display: grid;
+    grid-template-areas: 
+    "tagline tagline"
+    "gameTiles gameTiles";
+    width:90%;
+    align-self: center;
+    margin-bottom: 5vh;
+}
+
+
+
+.tagline{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    grid-area: tagline;
+    color: var(--yellow);
+    font-family: 'Barlow', sans-serif;
+    font-size: 6vh;
+    margin-top: 3vh;
+    margin-bottom: 4vh;
+}
+
+.gameTiles{
+    grid-area: gameTiles;
+    display: grid;
+    grid-template-areas: 
+    "gameTile1 gameTile2";
+    grid-gap: 3vh;
+}
+
+img[src='media/cps.png'],img[src='media/dtc4.png']{
+    height: 15vw;
+    border:0.2vh solid var(--yellow);
+    border-radius: 3vh;
+    margin-top: 3vh;
+    margin-bottom: 3vh;
+    
+}
+
+img[src="media/cps.png"]:hover,img[src="media/dtc4.png"]:hover{
+    animation-name: scaleUp;
+    animation-duration: 5s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes scaleUp {
+    0%{
+        scale:1;
+    }
+    50%{
+        scale:1.1;
+    }
+    100%{
+        scale:1;
+    }
+}
+.gameTile1{
+grid-area: gameTile1;
+}
+
+.gameTile2{
+    grid-area:gameTile2;
+}
+
+.gameTile1,.gameTile2{
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    text-align: center;
+    background-color: rgba(128, 128, 128, 0.336);
+    backdrop-filter: blur(30px);
+    padding: 3vw;
+    border-radius: 1vh;
+    box-shadow: 1vh 1vh 1vh black;
+}
+
+.gameTile1:hover,.gameTile2:hover{
+    animation-name: shadowIn;
+    animation-duration: 0.3s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes shadowIn {
+    0%{
+box-shadow: none;
+    }
+    100%{
+        box-shadow: 1vh 1vh 1vh black inset ;
+    }
+}
+.gameTile1>a,.gameTile2>a{
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    text-decoration: none;
+    color: var(--yellow);
+    font-family: 'Barlow', sans-serif;
+    font-size: 4vh;
+    width:max-content;
+}
+
+.gameDesc{
+    font-family: 'Barlow', sans-serif;
+    color: var(--yellow);
+    text-align: center;
+    margin-top: 3vh;
+    font-size: 3vh;
+    width:80%;
+    margin-left: 10vh;
+    margin-right: auto;
+}
+
+@media screen and (max-width:900px) {
+    .contentGrid{
+        display: grid;
+        grid-template-areas: 
+        "tagline"
+        "gameTiles";
+        width:80%;
+        align-self: center;
+        margin-bottom: 5vh;
+    }    
+
+    .gameTiles{
+        grid-area: gameTiles;
+        display: grid;
+        grid-template-areas: 
+        "gameTile1" 
+        "gameTile2";
+        grid-gap: 3vh;
+    }    
+    .tagline{
+        grid-area: tagline;
+        color: var(--yellow);
+        font-family: 'Barlow', sans-serif;
+        font-size: 6vh;
+        margin-top: 3vh;
+        margin-bottom: 4vh;
+        text-align: center;
+    }
+}
